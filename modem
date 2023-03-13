@@ -15,6 +15,10 @@ function check_connection {
 }
 
 # Menampilkan pilihan bahasa
+echo "====================================="
+echo "           MODEM REBOOT"
+echo "          $created MrAsxNet"
+echo "====================================="
 echo "Select language:"
 echo "1. English"
 echo "2. Bahasa Indonesia"
