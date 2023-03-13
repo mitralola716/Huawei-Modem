@@ -1,5 +1,5 @@
 #!/bin/bash
-# Reboot Huawei Modem dengan ADB Shell
+# Reboot Huawei Modem with ADB Shell support.
 # Created by MrAsxNet
 
 
