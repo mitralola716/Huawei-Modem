@@ -1,0 +1,118 @@
+#!/bin/bash
+# Reboot Huawei Modem dengan ADB Shell
+# Created by MrAsxNet
+# Mengecek apakah adb sudah terhubung dengan perangkat
+function check_connection {
+    adb devices | grep "$1" > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "$not_connected_ip_msg $1"
+        return 1
+    else
+        echo "$connected_ip_msg $1"
+        return 0
+    fi
+}
+
+# Menampilkan pilihan bahasa
+echo "Select language:"
+echo "1. English"
+echo "2. Bahasa Indonesia"
+
+# Meminta input dari pengguna
+read -p "Choice: " lang_choice
+
+# Mengecek pilihan bahasa yang dipilih
+if [ $lang_choice == 1 ]
+then
+    connected_msg="Connected to device. Ready for restart."
+    disconnected_msg="Not connected to device."
+    ip_prompt="Select IP address to restart:"
+    ip1="192.168.8.1"
+    ip2="192.168.9.1"
+    ip_manual_prompt="Enter manual IP address:"
+    exit_msg="Exiting script."
+    invalid_choice_msg="Invalid choice"
+    connecting_msg="Connecting..."
+    connected_ip_msg="Connected to $ip."
+	not_connected_ip_msg="Not Connected to $ip."
+    restart_msg="Modem will restart in 5 seconds."
+    reboot_msg="Modem restarted. Please wait until modem is back online."
+	created="Created by"
+	option="Choice"
+elif [ $lang_choice == 2 ]
+then
+    connected_msg="Terhubung dengan perangkat. Siap untuk restart."
+    disconnected_msg="Tidak terhubung dengan perangkat."
+    ip_prompt="Pilih IP modem yang akan direstart:"
+    ip1="192.168.8.1"
+    ip2="192.168.9.1"
+    ip_manual_prompt="Masukkan alamat IP manual:"
+    exit_msg="Keluar"
+    invalid_choice_msg="Pilihan tidak valid"
+    connecting_msg="Menghubungkan..."
+    connected_ip_msg="Terhubung ke $ip."
+	not_connected_ip_msg="Tidak terhubung $ip."
+    restart_msg="Modem akan direstart dalam 5 detik."
+    reboot_msg="Modem direstart. Harap tunggu hingga modem kembali online."
+	created="Dibuat oleh"
+	option="Pilihan"
+else
+    echo "Invalid choice"
+    exit 1
+fi
+
+# Menampilkan pilihan IP modem yang tersedia
+echo "====================================="
+echo "           MODEM REBOOT"
+echo "          $created MrAsxNet"
+echo "====================================="
+echo "$ip_prompt"
+echo "1. $ip1"
+echo "2. $ip2"
+echo "3. $ip_manual_prompt"
+echo "4. $exit_msg"
+
+# Meminta input dari pengguna
+read -p "$option: " choice
+
+# Mengecek pilihan yang dipilih
+if [ $choice == 1 ]
+then
+    ip="192.168.8.1"
+elif [ $choice == 2 ]
+then
+    ip="192.168.9.1"
+elif [ $choice == 3 ]
+then
+    read -p "$ip_manual_prompt" ip
+elif [ $choice == 4 ]
+then
+    echo "$exit_msg"
+    exit 0
+else
+    echo "$invalid_choice_msg"
+    exit 1
+fi
+
+# Melakukan restart modem
+echo "$connecting_msg"
+while true
+do
+    check_connection $ip
+    if [ $? -eq 0 ]
+    then
+		echo  "$connected_msg"
+		echo "$restart_msg"
+        sleep 5
+        adb shell "busybox echo -en 'AT^RESET\r' > /dev/appvcom1"
+		adb kill-server
+		echo "$reboot_msg"
+        break
+    else
+        echo "$connecting_msg"
+        adb connect $ip
+        sleep 5
+    fi
+done
+
