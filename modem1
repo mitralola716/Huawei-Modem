@@ -1,0 +1,181 @@
+#!/bin/bash
+# Reboot Huawei Modem dengan ADB Shell
+# Created by MrAsxNet
+
+# Check if adb command already exists
+if ! command -v adb &> /dev/null; then
+    # Install adb if not already installed
+    opkg update
+    opkg install adb
+
+    # Display notice that adb has been installed
+    echo "ADB has been installed."
+fi
+
+
+##############################
+# Fungsi untuk mengecek apakah perangkat sudah terhubung atau belum
+function check_device_status() {
+    adb devices | grep -w "$1" | grep "device" >/dev/null
+    echo $?
+}
+
+# Fungsi untuk mengecek apakah perangkat sedang dalam kondisi offline atau tidak
+function check_device_offline() {
+    adb devices | grep -w "$1" | grep "offline" >/dev/null
+    echo $?
+}
+
+# Mengecek apakah adb sudah terhubung dengan perangkat
+function check_connection {
+    adb devices | grep "$1" > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "$not_connected_ip_msg $1"
+        return 1
+    else
+        echo "$connected_ip_msg $1"
+        return 0
+    fi
+}
+
+
+# Fungsi untuk melakukan restart perangkat
+function restart_device() {
+    adb shell "busybox echo -en 'AT^RESET\r' > /dev/appvcom1"
+	echo "$reboot_msg"
+	adb kill-server
+}
+#########################
+# Menampilkan pilihan bahasa
+echo "====================================="
+echo "           MODEM REBOOT"
+echo "          Created by MrAsxNet"
+echo "====================================="
+echo "Select language:"
+echo "1. English"
+echo "2. Bahasa Indonesia"
+
+# Meminta input dari pengguna
+read -p "Choice: " lang_choice
+
+# Mengecek pilihan bahasa yang dipilih
+if [ $lang_choice == 1 ]
+then
+    connected_msg="Connected to device. Ready for restart."
+    disconnected_msg="Not connected to device."
+    ip_prompt="Select IP address to restart:"
+    ip1="192.168.8.1"
+    ip2="192.168.9.1"
+    ip_manual_prompt="Enter manual IP address:"
+    exit_msg="Exiting script."
+    invalid_choice_msg="Invalid choice"
+    connecting_msg="Connecting..."
+    connected_ip_msg="Connected to $ip."
+	not_connected_ip_msg="Not Connected to $ip."
+    restart_msg="Modem will restart in 5 seconds."
+    reboot_msg="Modem restarted. Please wait until modem is back online."
+	created="Created by"
+	option="Choice"
+	modem_offline="Devices is offline. Trying to connect..."
+	modem_not_connect="Devices not connected. Please make sure it is properly.."
+elif [ $lang_choice == 2 ]
+then
+    connected_msg="Terhubung dengan perangkat. Siap untuk restart."
+    disconnected_msg="Tidak terhubung dengan perangkat."
+    ip_prompt="Pilih IP modem yang akan direstart:"
+    ip1="192.168.8.1"
+    ip2="192.168.9.1"
+    ip_manual_prompt="Masukkan alamat IP manual:"
+    exit_msg="Keluar"
+    invalid_choice_msg="Pilihan tidak valid"
+    connecting_msg="Menghubungkan..."
+    connected_ip_msg="Terhubung ke $ip."
+	not_connected_ip_msg="Tidak terhubung ke $ip."
+    restart_msg="Modem akan direstart dalam 5 detik."
+    reboot_msg="Modem direstart. Harap tunggu hingga modem kembali online."
+	created="Dibuat oleh"
+	option="Pilihan"
+	modem_offline="Perangkat sedang dalam kondisi offline. Menghubungkan ulang ke perangkat..."
+	modem_not_connect="Perangkat tidak terhubung. Mohon pastikan perangkat terhubung dengan benar."
+else
+    echo "Invalid choice"
+    exit 1
+fi
+
+# Menampilkan pilihan IP modem yang tersedia
+echo "====================================="
+echo "           MODEM REBOOT"
+echo "          $created MrAsxNet"
+echo "====================================="
+echo "$ip_prompt"
+echo "1. $ip1"
+echo "2. $ip2"
+echo "3. $ip_manual_prompt"
+echo "4. $exit_msg"
+
+# Meminta input dari pengguna
+read -p "$option: " choice
+
+# Mengecek pilihan yang dipilih
+if [ $choice == 1 ]
+then
+    ip="192.168.8.1"
+elif [ $choice == 2 ]
+then
+    ip="192.168.9.1"
+elif [ $choice == 3 ]
+then
+    read -p "$ip_manual_prompt" ip
+elif [ $choice == 4 ]
+then
+    echo "$exit_msg"
+    exit 0
+else
+    echo "$invalid_choice_msg"
+    exit 1
+fi
+############################
+
+
+# Menghubungkan ke perangkat
+echo "$connecting_msg"
+adb connect $ip
+echo "$connected_ip_msg $ip"
+
+# Menunggu 5 detik
+sleep 5
+
+# Mengecek status perangkat
+status=$(check_device_status $1)
+
+
+# Jika perangkat tidak terhubung, maka akan dihubungkan ulang
+while [ $status -ne 0 ]; do
+    # Mengecek apakah perangkat sedang dalam kondisi offline
+    offline=$(check_device_offline $1)
+
+    # Jika perangkat offline, maka akan dihubungkan ulang
+    if [ $offline -eq 0 ]; then
+        echo "$modem_offline"
+        sleep 2
+        adb connect $1
+        sleep 5
+    else
+        echo "$modem_not_connect"
+        exit 1
+    fi
+
+    # Mengecek status perangkat kembali
+    status=$(check_device_status $1)
+done
+
+# Jika perangkat sudah terhubung, maka akan dilakukan restart
+echo "$restart_msg"
+sleep 5
+restart_device $1
+
+#Selesai
+
+
+
