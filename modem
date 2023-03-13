@@ -12,10 +12,6 @@ if ! command -v adb &> /dev/null; then
     echo "ADB has been installed."
 fi
 
-# Continue with the rest of the script
-echo "ADB command is already installed or has just been installed."
-
-
 # Mengecek apakah adb sudah terhubung dengan perangkat
 function check_connection {
     adb devices | grep "$1" > /dev/null 2>&1
