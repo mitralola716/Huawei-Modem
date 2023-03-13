@@ -1,6 +1,8 @@
 #!/bin/bash
 # Reboot Huawei Modem dengan ADB Shell
 # Created by MrAsxNet
+
+
 # Mengecek apakah adb sudah terhubung dengan perangkat
 function check_connection {
     adb devices | grep "$1" > /dev/null 2>&1
