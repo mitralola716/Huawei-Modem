@@ -2,6 +2,19 @@
 # Reboot Huawei Modem with ADB Shell support.
 # Created by MrAsxNet
 
+# Check if adb command already exists
+if ! command -v adb &> /dev/null; then
+    # Install adb if not already installed
+    opkg update
+    opkg install adb
+
+    # Display notice that adb has been installed
+    echo "ADB has been installed."
+fi
+
+# Continue with the rest of the script
+echo "ADB command is already installed or has just been installed."
+
 
 # Mengecek apakah adb sudah terhubung dengan perangkat
 function check_connection {
