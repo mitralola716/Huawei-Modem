@@ -67,7 +67,7 @@ then
     invalid_choice_msg="Pilihan tidak valid"
     connecting_msg="Menghubungkan..."
     connected_ip_msg="Terhubung ke $ip."
-	not_connected_ip_msg="Tidak terhubung $ip."
+	not_connected_ip_msg="Tidak terhubung ke $ip."
     restart_msg="Modem akan direstart dalam 5 detik."
     reboot_msg="Modem direstart. Harap tunggu hingga modem kembali online."
 	created="Dibuat oleh"
