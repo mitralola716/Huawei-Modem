@@ -25,6 +25,7 @@ function check_device_offline() {
     adb devices | grep -w "$1" | grep "offline" >/dev/null
     echo $?
 }
+#############################################################
 
 # Mengecek apakah adb sudah terhubung dengan perangkat
 function check_connection {
@@ -39,7 +40,7 @@ function check_connection {
     fi
 }
 
-
+##############################################################
 # Fungsi untuk melakukan restart perangkat
 function restart_device() {
     adb shell "busybox echo -en 'AT^RESET\r' > /dev/appvcom1"
