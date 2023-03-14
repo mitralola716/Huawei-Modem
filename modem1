@@ -16,7 +16,7 @@ fi
 ##############################
 # Fungsi untuk mengecek apakah perangkat sudah terhubung atau belum
 function check_device_status() {
-    adb devices | grep -w "$1" | grep "device" >/dev/null
+    adb devices | grep "$1" | grep "device" >/dev/null
     echo $?
 }
 
@@ -28,7 +28,7 @@ function check_device_offline() {
 
 # Mengecek apakah adb sudah terhubung dengan perangkat
 function check_connection {
-    adb devices | grep "$1" > /dev/null 2>&1
+    adb devices | grep "$1" > grep "device" >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
         echo "$not_connected_ip_msg $1"
@@ -174,8 +174,28 @@ done
 echo "$restart_msg"
 sleep 5
 restart_device $1
+############################
 
-#Selesai
+# Melakukan restart modem
+#echo "$connecting_msg"
+#while true
+#do
+#    check_connection $ip
+#    if [ $? -eq 0 ]
+#    then
+#		echo "$connected_msg"
+#		echo "$restart_msg"
+#        sleep 5
+#        adb shell "busybox echo -en 'AT^RESET\r' > /dev/appvcom1"
+#		adb kill-server
+#		echo "$reboot_msg"
+#        break
+#    else
+#        echo "$connecting_msg"
+#        adb connect $ip
+#        sleep 5
+#    fi
+#done
 
 
 
