@@ -28,4 +28,10 @@ Adapun fitur yang terdapat di dalamnya yaitu :
 8. IP Hunter<br>
 9. Send a SMS</B>
 
-
+## Installation
+Connection needed !
+```sh
+git clone "https://raw.githubusercontent.com/mitralola716/Huawei-Modem/main/script.sh"
+chmod +x /bin/mdm
+```
+then run **```mdm```** command using terminal
