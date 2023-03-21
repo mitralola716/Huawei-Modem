@@ -14,6 +14,7 @@ chmod +x /bin/modem
 then run **```modem```** command using terminal
 
 <B>2. Modem Tools</B>
+### Add Huawei Modem Tools using Terminal
 This script also support Huawei Modem, the feature it
 1. Reboot
 2. Refresh Data 
