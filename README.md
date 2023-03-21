@@ -3,9 +3,7 @@
 
 ### 1. Add Reboot Modem Tools for OpenWRT
 
-This script is using to reboot Huawei Modem with ADB shell installed supported on firmware. This script is running for OpenWRT.
-
-for all devices with OpenWrt or other linux distribution
+This script is using to reboot Huawei Modem with ADB shell installed supported on firmware. This script is running for all devices with OpenWRT or other linux distribution.
 ## Installation
 Connection needed !
 ```sh
