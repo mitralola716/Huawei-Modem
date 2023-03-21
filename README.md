@@ -19,6 +19,7 @@ then run **```modem```** command using terminal
 Script ini yaitu Huawei Modem Tools dapat dijalankan dengan terminal. Script ini dapat berjalan di OpenWRT.
 
 Adapun fitur yang terdapat di dalamnya yaitu :
+
 <b>1. Reboot<br>
 2. Refresh Data<br> 
 3. Modem Info<br>
