@@ -20,7 +20,7 @@ This script also support Huawei Modem, the feature it
 <b>1. Reboot<br>
 2. Refresh Data<br> 
 3. Modem Info<br>
-4. Device Info<br>
+4. Device Info
 5. Reboot (ADB)<br>  
 6. Lock Cell-ID<br>
 7. Unlock Cell-ID<br>
