@@ -13,4 +13,14 @@ chmod +x /bin/modem
 ```
 then run **```modem```** command using terminal
 
+<B>2. Modem Tools</B>
+This script also support Huawei Modem, the feature it
+1. Reboot
+2. Refresh Data 
+3. Modem Info
+4. Device Info
+5. Lock Cell-ID
+6. Unlock Cell-ID
+7. Send a SMS
+
 
