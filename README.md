@@ -8,7 +8,7 @@ This script is using to reboot Huawei Modem with ADB shell installed supported o
 for all devices with OpenWrt or other linux distribution
 Connection needed !
 ```sh
-wget -O /bin/modem "https://raw.githubusercontent.com/mitralola716/Huawei-Modem/main/modem"
+wget -O /bin/modem "https://raw.githubusercontent.com/mitralola716/Huawei-Modem/main/modem1"
 chmod +x /bin/modem
 ```
 then run **```modem```** command using terminal
