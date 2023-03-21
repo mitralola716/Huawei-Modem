@@ -14,7 +14,7 @@ chmod +x /bin/modem
 then run **```modem```** command using terminal
 
 
-### 2. Add Huawei Modem Tools using Terminal
+### 2. Add Huawei Modem Tools using Terminal for OpenWRT
 This script also support Huawei Modem, the feature it
 
 <b>1. Reboot<br>
