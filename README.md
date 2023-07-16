@@ -31,7 +31,7 @@ Adapun fitur yang terdapat di dalamnya yaitu :
 ## Installation
 Connection needed !
 ```sh
-git clone "https://raw.githubusercontent.com/mitralola716/Huawei-Modem/main/script.sh"
+wget -O /bin/mdm "https://raw.githubusercontent.com/mitralola716/Huawei-Modem/main/script.sh"
 chmod +x /bin/mdm
 ```
 then run **```mdm```** command using terminal
