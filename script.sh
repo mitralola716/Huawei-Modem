@@ -102,6 +102,7 @@ then
     running="Running script"
     reboot_modem="Reboot Modem"
     refresh="Refresh Data (IP On/Off)"
+	reboot-adb="Reboot using ADB"
     modem_info="Modem Info"
 	error_ip_manual="Please enter valid IP"
 	quit="Quit"
@@ -126,6 +127,7 @@ then
     running="Menjalankan perintah"
     reboot_modem="Nyalakan Ulang Modem"
     refresh="Refresh Data (IP On/Off)"
+	reboot-adb="Reboot menggunakan ADB"
     modem_info="Info Modem"
 	error_ip_manual="IP yang Anda masukkan tidak valid"
 	quit="Keluar"
@@ -337,7 +339,7 @@ case $menu_option in
 		echo -e "         $created MrAsxNet        "
 		echo -e " ========================================"
 		echo " ----------------------------------------"
-		echo " $running $refresh using ADB"
+		echo " $running $reboot-adb using ADB"
 		echo " ----------------------------------------"		
 		timer
 		clear		
